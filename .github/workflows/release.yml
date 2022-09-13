@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Build the package
-        run: sh ./build.sh
+        run: bash ./build.sh
       - name: Load GHR binary
         run: |
           curl -sL https://github.com/tcnksm/ghr/releases/download/v${GHR_VERSION}/ghr_v${GHR_VERSION}_linux_amd64.tar.gz | tar zx
