@@ -12,9 +12,7 @@ env:
   # GITHUB_REPOSITORY - Default variable
 
 jobs:
-
   build:
-  
     name: Build Bootstrap.js package
     runs-on: ubuntu-latest
     steps:
