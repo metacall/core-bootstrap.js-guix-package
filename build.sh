@@ -2,9 +2,17 @@
 
 set -euxo pipefail
 
-git clone --depth 1 --branch develop --single-branch https://github.com/metacall/core
-npm --prefix "`pwd`" install core/source/loaders/node_loader/bootstrap/lib/
-rm node_modules/node_loader_bootstrap
-node -e "console.log(require('./node_modules/espree/package.json').version)" &> VERSION
-tar -czvf espree-`cat VERSION`.tgz ./node_modules/*
-rm -rf core node_modules package-lock.json package.json
+# Define version
+VERSION=9.4.0
+
+# Clone spree and package it
+git clone --depth 1 --branch v${VERSION} --single-branch https://github.com/eslint/espree
+cd espree
+sed -i 's#external#//external#g' rollup.config.js # Remove external dependencies so all gets packaged into one file
+npm install
+npm run build
+npm pack
+cd ..
+cp espree/espree-${VERSION}.tgz .
+rm -rf espree
+printf "${VERSION}" &> VERSION
